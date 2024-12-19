@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <h1>Chatbot</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="query">Enter your query:</label><br />
+      <textarea
+        id="query"
+        name="query"
+        rows="4"
+        cols="50"
+        placeholder="Type your query here"></textarea
+      ><br />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="response">
+      <h3>Response:</h3>
+      <p>{{ response }}</p>
+      {% if response_time %}
+      <p><strong>Response Time:</strong> {{ response_time }} seconds</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

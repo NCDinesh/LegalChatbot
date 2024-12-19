@@ -66,10 +66,13 @@ def get_vectorstore(texts):
 
 def chatbot_view(request):
     """Render chatbot interface and handle user queries."""
+    response_text = None
+    response_time = None
+
     if request.method == "POST":
         user_query = request.POST.get("query")
         if not user_query:
-            return JsonResponse({"response": "Please enter a valid query."})
+            return render(request, "chatbot/index.html", {"response": "Please enter a valid query."})
 
         # Process the PDF and split into chunks
         raw_text = process_pdf()
@@ -98,21 +101,31 @@ def chatbot_view(request):
         payload = {"inputs": full_prompt, "parameters": config}
 
         try:
+            # Start timing the response
+            start_time = time.time()
+
             # Send the prompt to Hugging Face Inference API
             api_response = query_huggingface(payload)
+
+            # End timing the response
+            end_time = time.time()
+            response_time = round(end_time - start_time, 2)
+
+            # The response from the API
             response_text = api_response[0].get("generated_text", "Sorry, no response generated.")
 
             # Extract the response after the [/INST] marker
             response_start = response_text.find("[/INST]")
             if response_start != -1:
-                response_after_inst = response_text[response_start + len("[/INST]") :].strip()
+                response_text = response_text[response_start + len("[/INST]") :].strip()
             else:
-                response_after_inst = "Sorry, no valid answer generated."
-
-            # Return the response as JSON
-            return JsonResponse({"response": response_after_inst})
+                response_text = "Sorry, no valid answer generated."
 
         except Exception as e:
-            return JsonResponse({"response": f"Error: {str(e)}"})
+            response_text = f"Error: {str(e)}"
 
-    return render(request, "templates/chatbot.html")
+    return render(
+        request,
+        "templates/index.html",
+        {"response": response_text, "response_time": response_time},
+    )
