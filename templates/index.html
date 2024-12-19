@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chatbot</h1>
+      <form method="POST" id="query-form">
+        {% csrf_token %}
+        <label for="query">Enter your query:</label>
+        <textarea
+          id="query"
+          name="query"
+          rows="4"
+          cols="50"
+          placeholder="Type your query here"></textarea>
+        <button type="submit" id="submit-btn">Submit</button>
+      </form>
+      <div id="spinner" class="spinner" style="display: none"></div>
+
+      {% if query %}
+      <div id="user-query">
+        <h3>Your Query:</h3>
+        <p>{{ query }}</p>
+      </div>
+
+      {% endif %} {% if response %}
+      <div id="response">
+        <h3>Response:</h3>
+        <p>{{ response }}</p>
+        {% if response_time %}
+        <p><strong>Response Time:</strong> {{ response_time }} seconds</p>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    <script>
+      // Get form and spinner elements
+      const form = document.getElementById("query-form");
+      const spinner = document.getElementById("spinner");
+      const submitButton = document.getElementById("submit-btn");
+
+      // Add an event listener for the form submission
+      form.addEventListener("submit", function () {
+        // Show spinner and disable submit button
+        spinner.style.display = "block";
+        submitButton.disabled = true;
+      });
+    </script>
+  </body>
+</html>
