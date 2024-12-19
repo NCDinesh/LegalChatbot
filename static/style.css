@@ -58,8 +58,9 @@ button:hover {
   background-color: #357ab8;
 }
 
-/* Response styles */
-#response {
+/* Response and query styles */
+#response,
+#user-query {
   margin-top: 20px;
   padding: 15px;
   background: #f9f9f9;
@@ -67,12 +68,14 @@ button:hover {
   border-radius: 4px;
 }
 
-#response h3 {
+#response h3,
+#user-query h3 {
   margin-top: 0;
   color: #333;
 }
 
-#response p {
+#response p,
+#user-query p {
   margin: 5px 0;
 }
 
@@ -91,9 +94,16 @@ button:hover {
 /* Keyframes for spinner animation */
 @keyframes spin {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
+}
+
+/* Faded effect styles */
+.content-container.faded {
+  pointer-events: none; /* Disable interactions */
+  opacity: 0.5; /* Reduce opacity */
+  transition: opacity 0.3s ease-in-out;
 }

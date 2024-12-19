@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="static/style.css" />
   </head>
   <body>
+    <!-- Main container -->
     <div class="container">
       <h1>Chatbot</h1>
       <form method="POST" id="query-form">
@@ -20,33 +21,40 @@
           placeholder="Type your query here"></textarea>
         <button type="submit" id="submit-btn">Submit</button>
       </form>
-      <div id="spinner" class="spinner" style="display: none"></div>
 
-      {% if query %}
-      <div id="user-query">
-        <h3>Your Query:</h3>
-        <p>{{ query }}</p>
-      </div>
+      <!-- Overlay effect container -->
+      <div id="content-container" class="content-container">
+        <div id="spinner" class="spinner" style="display: none"></div>
 
-      {% endif %} {% if response %}
-      <div id="response">
-        <h3>Response:</h3>
-        <p>{{ response }}</p>
-        {% if response_time %}
-        <p><strong>Response Time:</strong> {{ response_time }} seconds</p>
+        {% if query %}
+        <div id="user-query">
+          <h3>Your Query:</h3>
+          <p>{{ query }}</p>
+        </div>
+        {% endif %} {% if response %}
+        <div id="response">
+          <h3>Response:</h3>
+          <p>{{ response }}</p>
+          {% if response_time %}
+          <p><strong>Response Time:</strong> {{ response_time }} seconds</p>
+          {% endif %}
+        </div>
         {% endif %}
       </div>
-      {% endif %}
     </div>
+
+    <!-- JavaScript -->
     <script>
-      // Get form and spinner elements
+      // Get form, spinner, overlay, and content container elements
       const form = document.getElementById("query-form");
       const spinner = document.getElementById("spinner");
+      const contentContainer = document.getElementById("content-container");
       const submitButton = document.getElementById("submit-btn");
 
       // Add an event listener for the form submission
       form.addEventListener("submit", function () {
-        // Show spinner and disable submit button
+        // Add fade effect and show spinner
+        contentContainer.classList.add("faded");
         spinner.style.display = "block";
         submitButton.disabled = true;
       });
