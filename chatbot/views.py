@@ -127,6 +127,6 @@ def chatbot_view(request):
 
     return render(
         request,
-        "templates/index.html",
+        "index.html",
         {"query":user_query,"response": response_text, "response_time": response_time},
     )
