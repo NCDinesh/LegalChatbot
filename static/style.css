@@ -107,3 +107,22 @@ button:hover {
   opacity: 0.5; /* Reduce opacity */
   transition: opacity 0.3s ease-in-out;
 }
+
+.footer {
+  text-align: center;
+  margin-top: -150px;
+  padding: 200px;
+  color:black;
+  font-size: 14px;
+  /* box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  */
+}
+
+.footer p {
+  margin: 0; 
+  line-height: 1.6; 
+}
+
+.footer strong {
+  color:black
+}
+
